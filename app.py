@@ -8,7 +8,7 @@ def validate_number(value):
     return value
 
 
-def add(a, b):
+def add(a, b)
     """Return the sum of two numbers."""
     validate_number(a)
     validate_number(b)
