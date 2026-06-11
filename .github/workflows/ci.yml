@@ -24,10 +24,14 @@ jobs:
               run: black --check .
 
             - name: install ruff
+              continue-on-error: true
               run: pip install ruff
 
             - name: Run ruff
               run: ruff check .
+
+            - name: ruff fix
+              run: ruff check . --fix
 
     test:
         runs-on: ubuntu-latest
