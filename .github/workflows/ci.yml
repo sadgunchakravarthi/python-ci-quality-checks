@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.13"
 
@@ -26,19 +26,12 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
 
-      - name: Run Black check
-        continue-on-error: true
+      - name: Check formatting with Black
         run: black --check .
 
       - name: Lint with Ruff
-        continue-on-error: true
         run: ruff check .
 
-      - name: Ruff auto-fix
-        run: ruff check . --fix
-
-      - name: Ruff check after fix
-        run: ruff check .
   test:
     name: Run unit tests
     runs-on: ubuntu-latest
@@ -48,7 +41,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.13"
 
