@@ -28,3 +28,20 @@ jobs:
 
             - name: Run ruff
               run: ruff check .
+
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Download code
+              uses: actions/checkout@v4
+
+            - name: Install python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.13' 
+
+            - name: install pytest
+              run: pip install pytest
+
+            - name: Run tests
+              run: pytest
