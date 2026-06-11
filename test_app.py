@@ -1,6 +1,6 @@
 """Unit tests for the calculator application."""
 
-import pytest
+import pytest, os
 
 # import os ---> to test how ruff check . work
 from app import add, divide, multiply, subtract, validate_number
