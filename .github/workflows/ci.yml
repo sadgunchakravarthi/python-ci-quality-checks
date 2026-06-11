@@ -1,0 +1,30 @@
+name: Test and lint
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+    workflow_dispatch:
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Doownload code
+              uses: actions/checkout@v4
+
+            - name: Install python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.13' 
+
+            - name: install black
+              run: pip install black
+
+            - name: Run black
+              run: black --check .
+
+            - name: install ruff
+              run: pip install ruff
+
+            - name: Run ruff
+              run: ruff check .
