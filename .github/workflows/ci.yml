@@ -26,16 +26,19 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
 
-      - name: Check formatting with Black
+      - name: Run Black check
+        continue-on-error: true
         run: black --check .
 
       - name: Lint with Ruff
         continue-on-error: true
         run: ruff check .
 
-      - name: ruff fix .
-        continue-on-error: true
-        run: ruff fix .
+      - name: Ruff auto-fix
+        run: ruff check . --fix
+
+      - name: Ruff check after fix
+        run: ruff check .
   test:
     name: Run unit tests
     runs-on: ubuntu-latest
