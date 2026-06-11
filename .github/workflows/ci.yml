@@ -1,52 +1,58 @@
 name: Test and lint
+
 on:
-    push:
-        branches: [main]
-    pull_request:
-        branches: [main]
-    workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
 jobs:
-    lint:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Doownload code
-              uses: actions/checkout@v4
+  lint:
+    runs-on: ubuntu-latest
 
-            - name: Install python
-              uses: actions/setup-python@v4
-              with:
-                python-version: '3.13' 
+    steps:
+      - name: Download code
+        uses: actions/checkout@v4
 
-            - name: install black
-              run: pip install black
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
 
-            - name: Run black
-              run: black --check .
+      - name: Install tools
+        run: pip install black ruff
 
-            - name: install ruff
-              continue-on-error: true
-              run: pip install ruff
+      - name: Run Black check
+        run: black --check .
 
-            - name: Run ruff
-              run: ruff check .
+      - name: Ruff format
+        if: always()
+        run: ruff format .
 
-            - name: ruff fix
-              run: ruff check . --fix
+      - name: Ruff fix
+        if: always()
+        run: ruff check . --fix
 
-    test:
-        runs-on: ubuntu-latest
-        needs: lint
-        steps:
-            - name: Download code
-              uses: actions/checkout@v4
+      - name: Run Ruff check
+        if: always()
+        run: ruff check .
 
-            - name: Install python
-              uses: actions/setup-python@v4
-              with:
-                python-version: '3.13' 
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
 
-            - name: install pytest
-              run: pip install pytest
+    steps:
+      - name: Download code
+        uses: actions/checkout@v4
 
-            - name: Run tests
-              run: pytest
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Install pytest
+        run: pip install pytest
+
+      - name: Run tests
+        run: pytest
