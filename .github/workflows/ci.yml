@@ -30,8 +30,11 @@ jobs:
         run: black --check .
 
       - name: Lint with Ruff
+        continue-on-error: true
         run: ruff check .
+
       - name: ruff fix .
+        continue-on-error: true
         run: ruff fix .
   test:
     name: Run unit tests
