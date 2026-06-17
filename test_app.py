@@ -1,10 +1,11 @@
 """Unit tests for the calculator application."""
 
-import os
+
 
 import pytest
 
 from app import add, divide, multiply, subtract, validate_number
+
 
 def test_add_two_numbers():
     """Test adding two numbers."""
