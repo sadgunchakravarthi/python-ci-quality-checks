@@ -1,7 +1,5 @@
 """Unit tests for the calculator application."""
 
-
-
 import pytest
 
 from app import add, divide, multiply, subtract, validate_number
