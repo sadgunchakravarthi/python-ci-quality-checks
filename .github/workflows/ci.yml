@@ -30,7 +30,16 @@ jobs:
         run: black --check .
 
       - name: Lint with Ruff
-        run: ruff check .
+        run: |
+          set -o pipefail
+          ruff check . | tee ruff-report.txt
+
+      - name: Upload Ruff report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ruff-report
+          path: ruff-report.txt
 
   test:
     name: Run unit tests
@@ -51,10 +60,12 @@ jobs:
           python -m pip install -r requirements.txt
 
       - name: Run tests with pytest
-        run: pytest | tee pytest-report.txt
+        run: |
+          set -o pipefail
+          pytest | tee pytest-report.txt
 
       - name: Upload pytest report
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: pytest-report
           path: pytest-report.txt
